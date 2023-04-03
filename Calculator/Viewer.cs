@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Calculator
 {
-    public partial class Form1 : Form
+    public partial class Viewer : Form
     {
-        public Form1()
+        public Viewer()
         {
             InitializeComponent();
             InterfaceRule();
@@ -26,6 +26,7 @@ namespace Calculator
             infixFormula.ReadOnly = true;
             postfixFormula.ReadOnly = true;
             solution.ReadOnly = true;
+            calcLog.ReadOnly = true;
 
             foreach (Button btn in new List<Button>() {
                 solutionBtn, dotBtn, zeroBtn, powBtn, threeBtn, twoBtn, oneBtn,
