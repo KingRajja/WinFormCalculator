@@ -18,17 +18,18 @@ namespace Calculator
             InterfaceRule();
         }
 
-        private void button1_Click(object sender, EventArgs e) {
-            if (richTextBox1.Text != String.Empty)
-                this.richTextBox2.Text = PolishSolution.make(this.richTextBox1.Text);
-            else
-                MessageBox.Show("TextBox1 is empty!");
-        }
-
         
 
+        private void symbolBtnClick(object sender, EventArgs e) { this.infixFormula.Text += ((Button)sender).Text[0];  }
+
         public void InterfaceRule() {
-            this.richTextBox2.ReadOnly = true;
+            foreach(Button btn in new List<Button>() {
+                solutionBtn, dotBtn, zeroBtn, powBtn, threeBtn, twoBtn, oneBtn,
+                minusBtn, sixBtn, fiveBtn, fourBtn, plusBtn, nineBtn, eightBtn, sevenBtn, multiBtn,
+                divisionBtn, closeBracketBtn, openBracketBtn, percentBtn,sqrtBtn,
+            }) {
+                btn.Click += new EventHandler(symbolBtnClick);
+            }
         }
     }
 
