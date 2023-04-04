@@ -47,7 +47,7 @@ namespace Calculator
 
         private void InterfaceRule() {
             presenter = new Presenter(this);
-            foreach (RichTextBox textBox in new RichTextBox[] { infixFormula, postfixFormula, solution, calcLog }) { textBox.ReadOnly = true; }
+
             tabs.KeyPress += new KeyPressEventHandler(ViewerKeyPress);
             tabs.KeyUp += new KeyEventHandler(ViewerKeyUp);
 
