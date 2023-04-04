@@ -16,8 +16,9 @@ namespace Calculator
         infix,
         calcLog
     }
-    public partial class Viewer : Form
+    public partial class Viewer : Form, IViewer
     {
+        private Presenter presenter;
         public Viewer()
         {
             InitializeComponent();
@@ -26,15 +27,15 @@ namespace Calculator
 
         
 
-        private void symbolBtnClick(object sender, EventArgs e) { this.infixFormula.Text += ((Button)sender).Text[0];  }
+        private void symbolBtnClick(object sender, EventArgs e) { presenter.addSymbolToInfixFormula(((Button)sender).Text[0]);  }
         private void solutionBtn_Click(object sender, EventArgs e) {}
-        private void clearBtn_Click(object sender, EventArgs e) {}
-        private void deleteBtn_Click(object sender, EventArgs e) {}
-        private void exitBtn_Click(object sender, EventArgs e) {}
+        private void clearBtn_Click(object sender, EventArgs e) { presenter.clear(); }
+        private void deleteBtn_Click(object sender, EventArgs e) { presenter.popSymbolFromInfixFromula(); }
+        private void exitBtn_Click(object sender, EventArgs e) { this.Close(); }
 
         private void ViewerKeyPress(object sender, KeyPressEventArgs e) {
             if(new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '*', '/', '%', ')', '(', '^' }.Contains(e.KeyChar)) {
-                
+                presenter.addSymbolToInfixFormula(e.KeyChar);
             }
         }
         private void ViewerKeyUp(object sender, KeyEventArgs e) {
@@ -43,6 +44,7 @@ namespace Calculator
         }
 
         private void InterfaceRule() {
+            presenter = new Presenter(this);
             foreach (RichTextBox textBox in new RichTextBox[] { infixFormula, postfixFormula, solution, calcLog }) { textBox.ReadOnly = true; }
             tabs.KeyPress += new KeyPressEventHandler(ViewerKeyPress);
             tabs.KeyUp += new KeyEventHandler(ViewerKeyUp);
