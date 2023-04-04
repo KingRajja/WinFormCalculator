@@ -28,7 +28,7 @@ namespace Calculator
         
 
         private void symbolBtnClick(object sender, EventArgs e) { presenter.addSymbolToInfixFormula(((Button)sender).Text[0]);  }
-        private void solutionBtn_Click(object sender, EventArgs e) {}
+        private void solutionBtn_Click(object sender, EventArgs e) { presenter.makeSolution(); }
         private void clearBtn_Click(object sender, EventArgs e) { presenter.clear(); }
         private void deleteBtn_Click(object sender, EventArgs e) { presenter.popSymbolFromInfixFromula(); }
         private void exitBtn_Click(object sender, EventArgs e) { this.Close(); }
@@ -39,8 +39,10 @@ namespace Calculator
             }
         }
         private void ViewerKeyUp(object sender, KeyEventArgs e) {
-            if (e.KeyCode.Equals(Keys.Enter)) { } 
-            else if (e.KeyCode.Equals(Keys.Back) || e.KeyCode.Equals(Keys.Delete)) { }
+            if (e.KeyCode.Equals(Keys.Enter)) {
+                presenter.makeSolution(); 
+            } 
+            else if (e.KeyCode.Equals(Keys.Back) || e.KeyCode.Equals(Keys.Delete)) { presenter.popSymbolFromInfixFromula(); }
         }
 
         private void InterfaceRule() {
@@ -50,9 +52,9 @@ namespace Calculator
             tabs.KeyUp += new KeyEventHandler(ViewerKeyUp);
 
             foreach (Button btn in new List<Button>() {
-                solutionBtn, dotBtn, zeroBtn, powBtn, threeBtn, twoBtn, oneBtn,
+                dotBtn, zeroBtn, powBtn, threeBtn, twoBtn, oneBtn,
                 minusBtn, sixBtn, fiveBtn, fourBtn, plusBtn, nineBtn, eightBtn, sevenBtn, multiBtn,
-                divisionBtn, closeBracketBtn, openBracketBtn, percentBtn,sqrtBtn,
+                divisionBtn, closeBracketBtn, openBracketBtn, percentBtn, sqrtBtn,
             }) {
                 btn.Click += new EventHandler(symbolBtnClick);
             }
@@ -82,11 +84,11 @@ namespace Calculator
             case TextBoxName.postfix:
                 return postfixFormula.Text;
             case TextBoxName.infix:
-                return postfixFormula.Text;
+                return infixFormula.Text;
             case TextBoxName.calcLog:
-                return postfixFormula.Text;
+                return calcLog.Text;
             case TextBoxName.solution:
-                return postfixFormula.Text;
+                return solution.Text;
             default:
                 return String.Empty;
             }
